@@ -2,17 +2,19 @@
 #include <cstring>
 #include <cmath>
 
-#include "book.h"
-#include "client.h"
-#include "order.h"
-#include "order_detail.h"
-#include "file_cabinet.h"
-#include "input_output.h"
+#include "master.cpp"
 
 using namespace std;
 
 
 int main()
 {
+    Client cl;
+    cl.id = 1;
+    cin >> cl.name;
+    cl.age = 19;
+    cl.salary = 500000;
+    write_client("client.txt", cl);
+
     return 0;
 }
