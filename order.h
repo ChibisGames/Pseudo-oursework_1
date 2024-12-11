@@ -1,5 +1,4 @@
-#ifndef ORDER_H
-#define ORDER_H
+#pragma once
 
 #include "client.h"
 #include "order_detail.h"
@@ -12,5 +11,3 @@ struct Order
     OrderDetail *detail;
     int num;
 };
-
-#endif

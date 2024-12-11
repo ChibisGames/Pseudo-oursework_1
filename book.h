@@ -1,6 +1,4 @@
-#ifndef BOOK_H
-#define BOOK_H
-
+#pragma once
 
 struct Book
 {
@@ -13,4 +11,3 @@ struct Book
    int category;
    // Category?
 };
-#endif

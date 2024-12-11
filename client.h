@@ -1,5 +1,4 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#pragma once
 
 
 struct Client
@@ -9,4 +8,3 @@ struct Client
     unsigned int age;
     float salary;
 };
-#endif

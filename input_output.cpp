@@ -24,10 +24,10 @@ void write_client(char file_name[30], struct Client p)
     if(file){
         fprintf(file, "%d %s %d %.2f\n", 
         p.id, p.name, p.age, p.salary);
-        fclose(file);
     }else{
         printf("Error to open file\n");
     }
+    fclose(file);
 }
 
 

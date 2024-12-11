@@ -1,5 +1,4 @@
-#ifndef ORDER_DETAIL_H
-#define ORDER_DETAIL_H
+#pragma once
 
 #include "book.h"
 
@@ -9,4 +8,3 @@ struct OrderDetail
    int num;
    float subsum;
 };
-#endif

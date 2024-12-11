@@ -6,6 +6,8 @@
 
 using namespace std;
 
+static int num_person = 0;
+
 
 int main()
 {
