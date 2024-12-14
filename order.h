@@ -6,8 +6,17 @@
 
 struct Order
 {
-    int id;
+    int code;
     Client order;
     OrderDetail *detail;
     int num;
+};
+
+
+static int num_orders = 0;
+//static int index = 0;
+
+void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books, struct Order *list_order)
+{
+
 };
