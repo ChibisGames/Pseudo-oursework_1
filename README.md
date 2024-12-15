@@ -1,7 +1,6 @@
 ```
 **mainLibrary:** главный (центральный) файл в форматах .cpp & .exe 
 **data:** запись/чтение данных в результате работы mainLibrary 
-**file_cabinet:** картотека .h & .cpp
 **input_output:** функции ввода вывода .h & .cpp
 **book:** книги .h & .cpp
 **client:** клиенты .h & .cpp
