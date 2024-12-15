@@ -1,11 +1,12 @@
-#pragma once
+#ifndef BOOK_H
+#define BOOK_H
 
 struct Book
 {
    int code;
-   char *author[40];
-   char *title[40];
-   int number;
+   char author[40];
+   char title[40];
+   int stock;
    float price;
    int year;
    int category;
@@ -13,10 +14,10 @@ struct Book
 };
 
 
-static int num_books = 0;
-//static int index = 0;
+void menu_books(int *opt, struct Book *lst_books);
+void insert_book(struct Book *b);
+int get_num_books();
+void print_lst_books(struct Book *list_books);
+void print_book(struct Book b);
 
-void menu_books(int *opt, struct Book *list_books)
-{
-
-};
+#endif
