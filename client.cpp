@@ -8,7 +8,7 @@
 using namespace std;
 
 static int num_clients = 0;
-static int index = 0;
+static int client_index = 0;
 
 
 void menu_clients(int *opt, struct Client *list_clients)
@@ -65,9 +65,10 @@ void menu_clients(int *opt, struct Client *list_clients)
 void insert_client(struct Client *c)
 {
     cout<< "\n*** INSERT CLIENT ***" << endl;
-    index++;
+    client_index = num_clients;
+    client_index++;
 
-    c -> code = index;
+    c -> code = client_index;
 
     cout<< "Name: ";
     cin>>c -> name;

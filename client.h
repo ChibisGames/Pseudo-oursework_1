@@ -6,7 +6,7 @@ struct Client
     int code;
     char name[40];
     unsigned int age;
-    int salary;
+    double salary;
 };
 
 

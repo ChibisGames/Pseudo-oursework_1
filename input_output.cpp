@@ -10,6 +10,37 @@
 
 using namespace std;
 
+
+/* Unnamed */
+void clean_file(const char file_name[30])
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "w");
+    fclose(file);
+};
+
+void print_num_object(const char file_name[30], int num_obj)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "w");
+
+    if (file) {fprintf(file, "%d\n", num_obj);}
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
+
+
 /* Clients */
 void print_client_in_file(const char file_name[30], struct Client c)
 {
@@ -30,42 +61,11 @@ void print_client_in_file(const char file_name[30], struct Client c)
     fclose(file);
 };
 
-
-void clean_file(const char file_name[30])
-{
-    FILE *file;
-    char file_path[100];
-
-    strcpy(file_path, "data/");
-    strcat(file_path, file_name);
-
-    file = fopen(file_path, "w");
-    fclose(file);
-};
-
-
-void print_num_clients(const char file_name[30], int num_cl)
-{
-    FILE *file;
-    char file_path[100];
-
-    strcpy(file_path, "data/");
-    strcat(file_path, file_name);
-
-    file = fopen(file_path, "w");
-
-    if (file) {fprintf(file, "%d\n", num_cl);}
-    else {cout<< "Error to open file\n" << endl;};
-
-    fclose(file);
-};
-
-
 void print_clients_in_file(struct Client *list_clients)
 {
     clean_file("client.txt");
 
-    print_num_clients("client.txt", get_num_clients());
+    print_num_object("client.txt", get_num_clients());
     
     for (int i = 0; i < get_num_clients(); i++)
     {
@@ -73,13 +73,10 @@ void print_clients_in_file(struct Client *list_clients)
     };
 };
 
-
 void read_file_client(const char file_name[30], struct Client *list_clients)
 {
     FILE *file;
     char file_path[100];
-    //struct Client c;
-    int num_cl;
 
     strcpy(file_path, "data/");
     strcat(file_path, file_name);
@@ -92,7 +89,66 @@ void read_file_client(const char file_name[30], struct Client *list_clients)
         
         for (int i = 0; i < num_clients; i++)
         {
-            fscanf(file, "%d %s %d %.1f\n", &(list_clients[i].code), &(list_clients[i].name), &(list_clients[i].age), &(list_clients[i].salary));
+            fscanf(file, "%d %s %d %lf\n", &(list_clients[i].code), &(list_clients[i].name), &(list_clients[i].age), &(list_clients[i].salary));
+        };
+    }
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
+
+
+/* Books */
+void print_book_in_file(const char file_name[30], struct Book c)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "a");
+
+    if (file)
+    {   
+        fprintf(file, "%d %s %s %d %f %d %d\n", 
+        c.code, c.author, c.title, c.stock, c.price, c.year, c.category);
+    }
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
+
+void print_books_in_file(struct Book *list_books)
+{
+    clean_file("book.txt");
+
+    print_num_object("book.txt", get_num_books());
+    
+    for (int i = 0; i < get_num_books(); i++)
+    {
+        print_book_in_file("book.txt", list_books[i]);
+    };
+};
+
+void read_file_books(const char file_name[30], struct Book *list_books)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "r");
+
+    if (file)
+    {   
+        fscanf(file, "%d\n", &num_books);
+        
+        for (int i = 0; i < num_books; i++)
+        {
+            fscanf(file, "%d %s %s %d %f %d %d\n", &(list_books[i].code), &(list_books[i].author), &(list_books[i].title), 
+            &(list_books[i].stock), &(list_books[i].price), &(list_books[i].year), &(list_books[i].category));
         };
     }
     else {cout<< "Error to open file\n" << endl;};
