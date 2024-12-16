@@ -5,7 +5,7 @@
 using namespace std;
 
 static int num_ords=0;
-static int index=0;
+static int ord_index=0;
 
 // implementation of methods for struct Order/OrderDetail
 
@@ -45,8 +45,8 @@ void insert_order(struct Order *ord, struct Client *lst_clients, struct Product 
     int pos;
 
     cout<< "\n*** Insert new Order ***"<<endl;
-    index++;
-    ord->code = index;
+    ord_index++;
+    ord->code = ord_index;
     cout<< "\nClient: ";
     pos = search_client(search_cli, lst_clients);
     ord->client = get_client(pos, lst_clients);
@@ -102,4 +102,6 @@ void print_order(struct Order ord){
     cout<<"\nTotal: "<<ord.total<<endl<<endl;
 }
 
-void insert_order_to_database()
+void insert_order_to_database(const char file_name[30], struct Client c){
+
+}

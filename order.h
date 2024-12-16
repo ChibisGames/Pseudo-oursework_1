@@ -1,6 +1,4 @@
-// Data struct of Order and OrderDetail
-#ifndef ORDER_H
-#define ORDER_H
+#pragma once
 
 #include "client.h"
 #include "order_detail.h"
@@ -31,5 +29,3 @@ void insert_order(struct Order *ord, struct Client *lst_clients, struct Product 
 int get_num_orders();
 void print_list_orders(struct Order *lst_orders);
 void print_order(struct Order ord);
-
-#endif
