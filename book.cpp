@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iomanip>
 #include "book.h"
+#include "input_output.h"
 using namespace std;
 
 static int num_books = 0;
@@ -11,10 +12,12 @@ static int book_index = 0;
 void menu_books(int *opt, struct Book *list_books){
     int pos;
     char search_title[40];
+    char crit[40];
     struct Book b;
 
 
     do{
+        read_file_books("book.txt", list_books);
         cout<<left;
         cout << setw(20) << "\n --- MANAGMENT OF BOOKS ---"<<endl;    
         cout << "\nSelect an option from [1-8] according to the menu:" << endl;
@@ -32,22 +35,29 @@ void menu_books(int *opt, struct Book *list_books){
         switch(*opt){
             case 1:     // insert
                 insert_book(&list_books[get_num_books()]);
+                print_books_in_file(list_books);
                 break;
             case 2:     // read 
                 print_lst_books(list_books, get_num_books());
                 break;
             case 3:     // update
-                update_book(search_title, list_books)
+                update_book(search_title, list_books);
+                clean_file("book.txt");
+                print_books_in_file(list_books);
                 break;
-            case 4:     // delete client                
+            case 4:     // delete book              
                 delete_book(search_title, list_books);
+                clean_file("book.txt");
+                print_books_in_file(list_books);
                 break;
             case 5:     // sort                
                 choose_criterion_sort(list_books);
+                clean_file("book.txt");
+                print_books_in_file(list_books);
                 print_lst_books(list_books, get_num_books());
                 break;
-            case 6:     // get client with cheapest cost
-                choose_criterion_find(list_books);
+            case 6:     // find books by criteria
+                choose_criterion_find(list_books, crit);
                 break;
             case 7:
                 cout << "Exiting to main menu..." << endl;
@@ -83,10 +93,8 @@ void insert_book(struct Book *b){
         cin>>b->year;
     }while(b->year < 2000);
     
-    do{
-        cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4)";
-        cin>>b->category;
-    }while(b->category < 1 || b->category > 4);
+    cout<<"Category (fantasy, fantastic, history, roman): ";
+    cin>>b->category;
     
     num_books++;
 }
@@ -108,22 +116,12 @@ void print_lst_books(struct Book *list_books, int num){
 }
 
 void print_book(struct Book b){
-    char c;
-    if(b.category == 1){
-        c = "fantasy";
-    }elif(b.category == 2){
-        c = "fantastic";
-    }elif(b.category == 3){
-        c = "history";
-    }else{
-        c = "roman";
-    }
     cout<< setw(10) << b.code << setw(15) << b.author << setw(15) << b.title
         << setw(10) << b.stock << setw(10) << b.price << setw(10)<< b.year << setw(10)
-         << c <<endl;
+         << b.category <<endl;
 }
 
-void update_book(char *search_title, struct Client *list_books){
+void update_book(char *search_title, struct Book *list_books){
     int pos;    
 
     cout<< "\n*** Update Book ***"<<endl;
@@ -150,10 +148,8 @@ void update_book(char *search_title, struct Client *list_books){
             cin>>list_books[pos].year;
         }while(list_books[pos].year < 2000);
         
-        do{
-            cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4)";
-            cin>>list_books[pos].category;
-        }while(list_books[pos].category < 1 || list_books[pos].category > 4);
+        cout<<"Category (fantasy, fantastic, history, roman): ";
+        cin>>list_books[pos].category;
         
 
         cout<<"\nBook updated!"<<endl;
@@ -227,7 +223,7 @@ void choose_criterion_sort(struct Book *b){
     }
 }
 
-void sort_by_authors(struct Client *lst_clients){
+void sort_by_authors(struct Book *list_books){
     struct Book aux;
 
     cout<<"\nList of books ordered by author"<<endl;
@@ -242,7 +238,7 @@ void sort_by_authors(struct Client *lst_clients){
     }
 }
 
-void sort_by_titles(struct Client *lst_clients){
+void sort_by_titles(struct Book *list_books){
     struct Book aux;
 
     cout<<"\nList of books ordered by title"<<endl;
@@ -257,7 +253,7 @@ void sort_by_titles(struct Client *lst_clients){
     }
 }
 
-void sort_by_prices(struct Client *lst_clients){
+void sort_by_prices(struct Book *list_books){
     struct Book aux;
 
     cout<<"\nList of books ordered by price"<<endl;
@@ -272,7 +268,7 @@ void sort_by_prices(struct Client *lst_clients){
     }
 }
 
-void sort_by_years(struct Client *lst_clients){
+void sort_by_years(struct Book *list_books){
     struct Book aux;
 
     cout<<"\nList of books ordered by authors"<<endl;
@@ -287,7 +283,7 @@ void sort_by_years(struct Client *lst_clients){
     }
 }
 
-void sort_by_categories(struct Client *lst_clients){
+void sort_by_categories(struct Book *list_books){
     struct Book aux;
 
     cout<<"\nList of books ordered by category"<<endl;
@@ -302,17 +298,17 @@ void sort_by_categories(struct Client *lst_clients){
     }
 }
 
-void choose_criterion_find(struct Book *b){
+void choose_criterion_find(struct Book *b, char *crit){
     int criterion;
-    crit_lst_books = new struct Book[MAX_BOOKS];
+    struct Book *crit_lst_books;
     cout<<"Choose criterion for find (author - 1, title - 2, price - 3, year - 4, category - 5): ";
     cin>>criterion;
     switch(criterion){
         case 1:
-            find_author(b, crit_lst_books);
+            find_author(b, crit_lst_books, crit);
             break;
         case 2:
-            find_title(b, crit_lst_books);
+            find_title(b, crit_lst_books, crit);
             break;
         case 3:
             find_price(b, crit_lst_books);
@@ -321,7 +317,7 @@ void choose_criterion_find(struct Book *b){
             find_year(b, crit_lst_books);
             break;
         case 5:
-            find_category(b, crit_lst_books);
+            find_category(b, crit_lst_books, crit);
             break;
         default:
             cout<<"Wrong criterion";
@@ -330,32 +326,30 @@ void choose_criterion_find(struct Book *b){
     }
 }
 
-void find_author(struct Book *b, struct Book *crit_lst_books){
+void find_author(struct Book *b, struct Book *crit_lst_books, char *crit){
     int ind=0;
-    char crit;
     cout<<"Author you want to find: ";
     cin>>crit;
-    for (int i, i<get_num_books(), i++){
+    for (int i=0; i<get_num_books(); i++){
         if (strcmp(b[i].author, crit) == 0){
             crit_lst_books[ind] = b[i];
             ind++;
         }
     }
-    print_lst_book(crit_lst_book, ind+1);
+    print_lst_books(crit_lst_books, ind+1);
 }
 
-void find_title(struct Book *b, struct Book *crit_lst_books){
+void find_title(struct Book *b, struct Book *crit_lst_books, char *crit){
     int ind=0;
-    char crit;
     cout<<"Title you want to find: ";
     cin>>crit;
-    for (int i, i<get_num_books(), i++){
+    for (int i; i<get_num_books(); i++){
         if (strcmp(b[i].title, crit) == 0){
             crit_lst_books[ind] = b[i];
             ind++;
         }
     }
-    print_lst_book(crit_lst_book, ind+1);
+    print_lst_books(crit_lst_books, ind+1);
 }
 
 void find_price(struct Book *b, struct Book *crit_lst_books){
@@ -363,39 +357,37 @@ void find_price(struct Book *b, struct Book *crit_lst_books){
     int crit;
     cout<<"Price you want to find: ";
     cin>>crit;
-    for (int i, i<get_num_books(), i++){
+    for (int i; i<get_num_books(); i++){
         if (b[i].price == crit){
             crit_lst_books[ind] = b[i];
             ind++;
         }
     }
-    print_lst_book(crit_lst_book, ind+1);
+    print_lst_books(crit_lst_books, ind+1);
 }
 
 void find_year(struct Book *b, struct Book *crit_lst_books){
-    int ind=0;
-    char crit;
+    int ind=0, crit;
     cout<<"Year you want to find: ";
     cin>>crit;
-    for (int i, i<get_num_books(), i++){
+    for (int i; i<get_num_books(); i++){
         if (b[i].year == crit){
             crit_lst_books[ind] = b[i];
             ind++;
         }
     }
-    print_lst_book(crit_lst_book, ind+1);
+    print_lst_books(crit_lst_books, ind+1);
 }
 
-void find_category(struct Book *b, struct Book *crit_lst_books){
+void find_category(struct Book *b, struct Book *crit_lst_books, char *crit){
     int ind=0;
-    char crit;
     cout<<"Category you want to find: ";
     cin>>crit;
-    for (int i, i<get_num_books(), i++){
-        if (b[i].category == crit){
+    for (int i; i<get_num_books(); i++){
+        if(strcmp(b[i].title, crit) == 0){
             crit_lst_books[ind] = b[i];
             ind++;
         }
     }
-    print_lst_book(crit_lst_book, ind+1);
+    print_lst_books(crit_lst_books, ind+1);
 }
