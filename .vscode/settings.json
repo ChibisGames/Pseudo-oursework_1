@@ -3,6 +3,7 @@
     "files.associations": {
         "iostream": "cpp",
         "system_error": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "iomanip": "cpp"
     }
 }
