@@ -93,8 +93,13 @@ void insert_book(struct Book *b){
         cin>>b->year;
     }while(b->year < 2000);
     
-    cout<<"Category (fantasy, fantastic, history, roman): ";
+    cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4): ";
     cin>>b->category;
+
+    do{
+        cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4): ";
+        cin>>b->category;
+    }while(b->category < 1 || b->category > 4);
     
     num_books++;
 }
@@ -117,8 +122,23 @@ void print_lst_books(struct Book *list_books, int num){
 
 void print_book(struct Book b){
     cout<< setw(10) << b.code << setw(15) << b.author << setw(15) << b.title
-        << setw(10) << b.stock << setw(10) << b.price << setw(10)<< b.year << setw(10)
-         << b.category <<endl;
+        << setw(10) << b.stock << setw(10) << b.price << setw(10)<< b.year;
+    switch(b.category){
+        case 1:
+            setw(10)<<"fanstasy"<<endl;
+            break;
+        case 2:
+            setw(10)<<"fantastic"<<endl;
+            break;
+        case 3:
+            setw(10)<<"history"<<endl;
+            break;
+        case 4:
+            setw(10)<<"roman"<<endl;
+            break;
+        default:
+            break;
+    }
 }
 
 void update_book(char *search_title, struct Book *list_books){
@@ -148,8 +168,10 @@ void update_book(char *search_title, struct Book *list_books){
             cin>>list_books[pos].year;
         }while(list_books[pos].year < 2000);
         
-        cout<<"Category (fantasy, fantastic, history, roman): ";
-        cin>>list_books[pos].category;
+        do{
+            cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4): ";
+            cin>>list_books[pos].category;
+        }while(list_books[pos].category < 1 || list_books[pos].category > 4);;
         
 
         cout<<"\nBook updated!"<<endl;
