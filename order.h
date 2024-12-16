@@ -4,13 +4,6 @@
 #include "order_detail.h"
 #define MAX 1828
 
-// order details attributes
-struct OrderDetail{
-    Product product;
-    int quantity;
-    double subtotal;
-};
-
 // order attributes
 struct Order{
     int code;
