@@ -1,5 +1,4 @@
-#ifndef BOOK_H
-#define BOOK_H
+#pragma once
 
 struct Book
 {
@@ -9,7 +8,7 @@ struct Book
    int stock;
    float price;
    int year;
-   char category;
+   int category;
 };
 
 
@@ -35,6 +34,3 @@ void find_title(struct Book *b, struct Book *crit_lst_books, char *crit);
 void find_price(struct Book *b, struct Book *crit_lst_books);
 void find_year(struct Book *b, struct Book *crit_lst_books);
 void find_category(struct Book *b, struct Book *crit_lst_books, char *crit);
-
-
-#endif
