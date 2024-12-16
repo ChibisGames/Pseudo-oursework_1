@@ -7,9 +7,7 @@ using namespace std;
 static int num_ords=0;
 static int ord_index=0;
 
-// implementation of methods for struct Order/OrderDetail
 
-// menu of orders
 void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books, struct Order *list_orders){
     do{
         cout<<left;
@@ -49,14 +47,13 @@ void insert_order(struct Order *ord, struct Client *list_clients, struct Book *l
     ord->code = ord_index;
     cout<< "\nClient: ";
     pos = search_client(search_cli, list_clients);
-    ord->client = get_client(pos, list_clients);
+    //ord->client = get_client(pos, list_clients);
 
-    // insert the order details
     do{        
         if(ord->num_details < MAX){
-            insert_order_detail(&ord->details[ord->num_details], list_books);
+            /*insert_order_detail(&ord->details[ord->num_details], list_books);
             ord->total += ord->details[ord->num_details].subtotal;
-            ord->num_details++;
+            ord->num_details++;*/
         }else{
             cout<<"\nMax number of order details reached!"<<endl;
             break;
@@ -92,13 +89,14 @@ void print_order(struct Order ord){
     cout<<"-------------------------------------------------------------"<<endl;
 
     for(int i=0; i<ord.num_details; i++){
-        cout<<setw(10)<<(i+1)<<
+        /*cout<<setw(10)<<(i+1)<<
               setw(15)<<ord.details[i].product.description<<
               setw(15)<<ord.details[i].product.unit_price<<
               setw(10)<<ord.details[i].quantity<<
-              setw(10)<<ord.details[i].subtotal<<endl;
+              setw(10)<<ord.details[i].subtotal<<endl;*/
     }
 
     cout<<"\nTotal: "<<ord.total<<endl<<endl;
 }
 
+// FIXME: 94, 52, 56,

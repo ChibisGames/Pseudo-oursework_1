@@ -54,7 +54,7 @@ void print_client_in_file(const char file_name[30], struct Client c)
 
     if (file)
     {   
-        fprintf(file, "%d %s %d %.1f\n", c.code, c.name, c.age, c.salary);
+        fprintf(file, "%d %s %d %lf\n", c.code, c.name, c.age, c.salary);
     }
     else {cout<< "Error to open file\n" << endl;};
 
@@ -158,7 +158,7 @@ void read_file_books(const char file_name[30], struct Book *list_books)
 
 
 
-
+// FIXME: 175, 210 rows
 /* Order */
 void print_order_in_file(const char file_name[30], struct Order c)
 {
@@ -172,7 +172,7 @@ void print_order_in_file(const char file_name[30], struct Order c)
 
     if (file)
     {   
-        fprintf(file, "%d %s %d %.1f\n", c.code, c.name, c.age, c.salary);
+        //fprintf(file, "%d %s %d %.1f\n", c.code, c.name, c.age, c.salary);
     }
     else {cout<< "Error to open file\n" << endl;};
 
@@ -203,11 +203,11 @@ void read_file_order(const char file_name[30], struct Order *list_orders)
 
     if (file)
     {   
-        fscanf(file, "%d\n", &num_orders);
+        fscanf(file, "%d\n", &num_ords);
         
-        for (int i = 0; i < num_orders; i++)
+        for (int i = 0; i < num_ords; i++)
         {
-            fscanf(file, "%d %s %d %lf\n", &(list_orders[i].code), &(list_orders[i].name), &(list_orders[i].age), &(list_orders[i].salary));
+            //fscanf(file, "%d %s %d %lf\n", &(list_orders[i].code), &(list_orders[i].name), &(list_orders[i].age), &(list_orders[i].salary));
         };
     }
     else {cout<< "Error to open file\n" << endl;};
