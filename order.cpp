@@ -10,7 +10,7 @@ static int ord_index=0;
 // implementation of methods for struct Order/OrderDetail
 
 // menu of orders
-void menu_orders(int *opt, struct Client *lst_clients, struct Product *lst_products, struct Order *lst_orders){
+void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books, struct Order *list_orders){
     do{
         cout<<left;
         cout<< setw(20) << "\n --- MANAGMENT OF ORDERS ---"<<endl;
@@ -24,10 +24,10 @@ void menu_orders(int *opt, struct Client *lst_clients, struct Product *lst_produ
 
         switch(*opt){
             case 1:     // insert order
-                insert_order(&lst_orders[get_num_orders()], lst_clients, lst_products);
+                insert_order(&list_orders[get_num_orders()], list_clients, list_books);
                 break;
             case 2:     // print orders/details
-                print_list_orders(lst_orders);
+                print_list_orders(list_orders);
                 break;
             case 3:
                 cout << "Exiting to main menu..." << endl;
@@ -40,7 +40,7 @@ void menu_orders(int *opt, struct Client *lst_clients, struct Product *lst_produ
     }while(*opt != 3);    
 }
 
-void insert_order(struct Order *ord, struct Client *lst_clients, struct Product *lst_products){
+void insert_order(struct Order *ord, struct Client *list_clients, struct Book *list_books){
     char search_cli[50], cont;
     int pos;
 
@@ -48,13 +48,13 @@ void insert_order(struct Order *ord, struct Client *lst_clients, struct Product 
     ord_index++;
     ord->code = ord_index;
     cout<< "\nClient: ";
-    pos = search_client(search_cli, lst_clients);
-    ord->client = get_client(pos, lst_clients);
+    pos = search_client(search_cli, list_clients);
+    ord->client = get_client(pos, list_clients);
 
     // insert the order details
     do{        
         if(ord->num_details < MAX){
-            insert_order_detail(&ord->details[ord->num_details], lst_products);
+            insert_order_detail(&ord->details[ord->num_details], list_books);
             ord->total += ord->details[ord->num_details].subtotal;
             ord->num_details++;
         }else{
@@ -74,11 +74,11 @@ int get_num_orders(){
     return num_ords;
 }
 
-void print_list_orders(struct Order *lst_orders){
+void print_list_orders(struct Order *list_orders){
     cout<<"\n*** List of Orders ***"<<endl;
 
     for(int i=0; i<get_num_orders(); i++){
-        print_order(lst_orders[i]);
+        print_order(list_orders[i]);
     }
 }
 

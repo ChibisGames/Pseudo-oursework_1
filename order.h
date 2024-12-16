@@ -17,8 +17,8 @@ struct Order{
 };
 
 // methods
-void menu_orders(int *opt, struct Client *lst_clients, struct Product *lst_products, struct Order *lst_orders);
-void insert_order(struct Order *ord, struct Client *lst_clients, struct Product *lst_products);
+void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books, struct Order *list_orders);
+void insert_order(struct Order *ord, struct Client *list_clients, struct Book *list_books);
 int get_num_orders();
-void print_list_orders(struct Order *lst_orders);
+void print_list_orders(struct Order *list_orders);
 void print_order(struct Order ord);
