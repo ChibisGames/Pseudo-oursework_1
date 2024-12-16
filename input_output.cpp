@@ -172,7 +172,7 @@ void print_order_in_file(const char file_name[30], struct Order c)
 
     if (file)
     {   
-        //fprintf(file, "%d %s %d %.1f\n", c.code, c.name, c.age, c.salary);
+        fprintf(file, "%d %s %d\n", c.code, c.client, c.num_details);
     }
     else {cout<< "Error to open file\n" << endl;};
 
@@ -207,7 +207,7 @@ void read_file_order(const char file_name[30], struct Order *list_orders)
         
         for (int i = 0; i < num_ords; i++)
         {
-            //fscanf(file, "%d %s %d %lf\n", &(list_orders[i].code), &(list_orders[i].name), &(list_orders[i].age), &(list_orders[i].salary));
+            fscanf(file, "%d %s %d\n", &(list_orders[i].code), &(list_orders[i].client), &(list_orders[i].num_details));
         };
     }
     else {cout<< "Error to open file\n" << endl;};
