@@ -125,16 +125,16 @@ void print_book(struct Book b){
         << setw(10) << b.stock << setw(10) << b.price << setw(10)<< b.year;
     switch(b.category){
         case 1:
-            setw(10)<<"fanstasy"<<endl;
+            cout<<setw(10)<<"fanstasy"<<endl;
             break;
         case 2:
-            setw(10)<<"fantastic"<<endl;
+            cout<<setw(10)<<"fantastic"<<endl;
             break;
         case 3:
-            setw(10)<<"history"<<endl;
+            cout<<setw(10)<<"history"<<endl;
             break;
         case 4:
-            setw(10)<<"roman"<<endl;
+            cout<<setw(10)<<"roman"<<endl;
             break;
         default:
             break;
