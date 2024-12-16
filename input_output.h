@@ -14,3 +14,9 @@ void read_file_client(const char file_name[30], struct Client *list_clients);
 void print_book_in_file(const char file_name[30], struct Book c);
 void print_books_in_file(struct Book *list_clients);
 void read_file_books(const char file_name[30], struct Book *list_clients);
+
+
+/* Order */
+
+
+/* Order_Detail */
