@@ -158,6 +158,60 @@ void read_file_books(const char file_name[30], struct Book *list_books)
 
 
 /* Order */
+void print_order_in_file(const char file_name[30], struct Order c)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "a");
+
+    if (file)
+    {   
+        fprintf(file, "%d %s %d %.1f\n", c.code, c.name, c.age, c.salary);
+    }
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
+
+void print_order_in_file(struct Order *list_orders)
+{
+    clean_file("order.txt");
+
+    print_num_object("order.txt", get_num_orders());
+    
+    for (int i = 0; i < get_num_orders(); i++)
+    {
+        print_order_in_file("order.txt", list_orders[i]);
+    };
+};
+
+void read_file_order(const char file_name[30], struct Order *list_orders)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "r");
+
+    if (file)
+    {   
+        fscanf(file, "%d\n", &num_orders);
+        
+        for (int i = 0; i < num_orders; i++)
+        {
+            fscanf(file, "%d %s %d %lf\n", &(list_orders[i].code), &(list_orders[i].name), &(list_orders[i].age), &(list_orders[i].salary));
+        };
+    }
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
 
 
 /* Order_Detail */

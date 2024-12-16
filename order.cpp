@@ -102,6 +102,3 @@ void print_order(struct Order ord){
     cout<<"\nTotal: "<<ord.total<<endl<<endl;
 }
 
-void insert_order_to_database(const char file_name[30], struct Client c){
-
-}
