@@ -76,5 +76,12 @@ void delete_order_detail(struct Order *list_orders, struct Client *list_client, 
     list_orders[code].total = 0;
 
     list_orders[code].num_details--;
+
+    if (list_orders[code].num_details == 0)
+    {
+        list_orders[code] = list_orders[code + 1];
+        num_orders--;
+    }
+    
     cout << "Order deleted successfully.\n";
 }
