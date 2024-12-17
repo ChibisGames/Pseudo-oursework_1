@@ -19,7 +19,8 @@ void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books,
         cout << "\nSelect an option from [1-3] according to the menu:" << endl;
         cout << "[1]. Insert order"<<endl;
         cout << "[2]. Print list of orders"<<endl;
-        cout << "[3]. Exit"<<endl;
+        cout << "[3]. Delete order detail"<<endl;
+        cout << "[4]. Exit"<<endl;
         cout << "-----------------------------------------------"<<endl;
         cout << "Enter option: ";
         cin>> *opt;
@@ -35,6 +36,12 @@ void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books,
                 print_list_orders(list_orders);
                 break;
             case 3:
+                delete_order_detail(list_orders);
+                print_orders_in_file(list_orders);
+                print_books_in_file(list_books);
+                print_clients_in_file(list_clients);
+                break;
+            case 4:
                 cout << "Exiting to main menu..." << endl;
                 break;
             default:
@@ -42,7 +49,7 @@ void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books,
                 break;
         }
 
-    }while(*opt != 3);    
+    }while(*opt != 4);    
 }
 
 void insert_order(struct Order *ord, struct Client *list_clients, struct Book *list_books){
