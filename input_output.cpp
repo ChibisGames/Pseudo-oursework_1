@@ -180,13 +180,17 @@ void print_order_in_file(const char file_name[30], struct Order c)
 void print_orders_in_file(struct Order *list_orders)
 {
     clean_file("order.txt");
+    clean_file("order_detail.txt");
 
     print_num_object("order.txt", get_num_orders());
-    
+
     for (int i = 0; i < get_num_orders(); i++)
     {
         print_order_in_file("order.txt", list_orders[i]);
-        print_order_detail_in_file("order_detail.txt", &(list_orders[i]), list_orders[i].num_details);
+        for (int j = 0; j < list_orders[i].num_details; j++)
+        {
+            print_order_detail_in_file("order_detail.txt", &(list_orders[i]), j);
+        }  
     };
 };
 

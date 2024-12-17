@@ -10,4 +10,4 @@ struct OrderDetail
 };
 
 void insert_order_detail(OrderDetail *detail, Book *list_books);
-void delete_order_detail(struct Order *list_orders);
+void delete_order_detail(struct Order *list_orders, struct Client *list_client, struct Book *list_book);

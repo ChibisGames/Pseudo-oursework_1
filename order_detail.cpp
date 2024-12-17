@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iomanip>
 #include "order_detail.h"
+#include "order.h"
 using namespace std;
 
 
@@ -38,7 +39,7 @@ void insert_order_detail(OrderDetail *detail, Book *list_books)
     cout << "Order detail added successfully.\n";
 }
 
-void delete_order_detail(struct Order *list_orders)
+void delete_order_detail(struct Order *list_orders, struct Client *list_client, struct Book *list_book)
 {   
     int code=0, detail=0;
     cout << "** DELETE ORDER DETAIL **" << endl;    
@@ -62,11 +63,18 @@ void delete_order_detail(struct Order *list_orders)
         cin >> detail;
     } while (detail > list_orders[code].num_details);
 
+    detail--;
+    list_book[list_orders[code].details[detail].book.code - 1].stock += list_orders[code].details[detail].quantity;
+    list_orders[code].details[detail].quantity = 0;
+    
+    list_client[list_orders[code].client.code - 1].salary += list_orders[code].details[detail].subtotal;
+
     for (int i = detail; i < list_orders[code].num_details - 1; i++)
     {
-        list_orders->details[i].book = list_orders->details[i + 1].book;
+        list_orders->details[i] = list_orders->details[i + 1];
     }
-    
+    list_orders[code].total = 0;
+
     list_orders[code].num_details--;
     cout << "Order deleted successfully.\n";
 }

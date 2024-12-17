@@ -36,7 +36,7 @@ void menu_orders(int *opt, struct Client *list_clients, struct Book *list_books,
                 print_list_orders(list_orders);
                 break;
             case 3:
-                delete_order_detail(list_orders);
+                delete_order_detail(list_orders, list_clients, list_books);
                 print_orders_in_file(list_orders);
                 print_books_in_file(list_books);
                 print_clients_in_file(list_clients);
