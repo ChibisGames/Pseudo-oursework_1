@@ -34,3 +34,6 @@ void find_title(struct Book *b, struct Book *crit_lst_books, char *crit);
 void find_price(struct Book *b, struct Book *crit_lst_books);
 void find_year(struct Book *b, struct Book *crit_lst_books);
 void find_category(struct Book *b, struct Book *crit_lst_books, char *crit);
+struct Book get_book(int pos, struct Book *list_books);
+struct Book default_book();
+struct Book get_book_by_id(int code, struct Book *list_books);

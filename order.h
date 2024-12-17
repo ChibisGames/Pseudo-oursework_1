@@ -2,18 +2,14 @@
 
 #include "client.h"
 #include "order_detail.h"
-#define MAX 1828
+#define MAX_DETAILS 10
 
-// order attributes
-struct Order{
-    int code;
-    Client client;
-    OrderDetail details[MAX];
-    int num_details;
-    double total;
-
-    Order():
-        num_details(0), total(0.0){}
+struct Order {
+    int code;                       
+    Client client;                  
+    OrderDetail details[MAX_DETAILS];
+    int num_details = 0;            
+    double total = 0.0;            
 };
 
 // methods

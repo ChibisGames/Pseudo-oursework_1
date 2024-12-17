@@ -131,7 +131,7 @@ void print_books_in_file(struct Book *list_books)
     };
 };
 
-void read_file_books(const char file_name[30], struct Book *list_books)
+void read_file_book(const char file_name[30], struct Book *list_books)
 {
     FILE *file;
     char file_path[100];
@@ -157,8 +157,6 @@ void read_file_books(const char file_name[30], struct Book *list_books)
 };
 
 
-
-// FIXME: 175, 210 rows
 /* Order */
 void print_order_in_file(const char file_name[30], struct Order c)
 {
@@ -172,14 +170,14 @@ void print_order_in_file(const char file_name[30], struct Order c)
 
     if (file)
     {   
-        fprintf(file, "%d %s %d\n", c.code, c.client, c.num_details);
+        fprintf(file, "%d %d %d\n", c.code, c.client.code, c.num_details);
     }
     else {cout<< "Error to open file\n" << endl;};
 
     fclose(file);
 };
 
-void print_order_in_file(struct Order *list_orders)
+void print_orders_in_file(struct Order *list_orders)
 {
     clean_file("order.txt");
 
@@ -188,10 +186,12 @@ void print_order_in_file(struct Order *list_orders)
     for (int i = 0; i < get_num_orders(); i++)
     {
         print_order_in_file("order.txt", list_orders[i]);
+        print_order_detail_in_file("order_detail.txt", &(list_orders[i]), list_orders[i].num_details);
     };
 };
 
-void read_file_order(const char file_name[30], struct Order *list_orders)
+void read_file_order(const char file_name[30], struct Order *list_orders,
+    struct Book *list_books, struct Client *list_clients)
 {
     FILE *file;
     char file_path[100];
@@ -203,11 +203,13 @@ void read_file_order(const char file_name[30], struct Order *list_orders)
 
     if (file)
     {   
-        fscanf(file, "%d\n", &num_ords);
+        fscanf(file, "%d\n", &num_orders);
         
-        for (int i = 0; i < num_ords; i++)
+        for (int i = 0; i < num_orders; i++)
         {
-            fscanf(file, "%d %s %d\n", &(list_orders[i].code), &(list_orders[i].client), &(list_orders[i].num_details));
+            fscanf(file, "%d %d %d\n", &(list_orders[i].code), &(list_orders[i].client.code), &(list_orders[i].num_details));
+
+            read_file_order_detail("order_detail.txt", &(list_orders[i]), list_books, list_clients);
         };
     }
     else {cout<< "Error to open file\n" << endl;};
@@ -217,3 +219,53 @@ void read_file_order(const char file_name[30], struct Order *list_orders)
 
 
 /* Order_Detail */
+void print_order_detail_in_file(const char file_name[30], Order *o, int i)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "a");
+
+    if (file)
+    {   
+        fprintf(file, "%d %d %d\n", o->code, o->details[i].book.code, o->details[i].quantity);
+    }
+    else {cout<< "Error to open file\n" << endl;};
+
+    fclose(file);
+};
+
+void read_file_order_detail(const char file_name[30], struct Order *o,
+    struct Book *list_books, struct Client *list_clients)
+{
+    FILE *file;
+    char file_path[100];
+
+    strcpy(file_path, "data/");
+    strcat(file_path, file_name);
+
+    file = fopen(file_path, "r");
+
+    if (file)
+    {      
+        for (int j = 0; j < o->num_details; j++)
+        {
+            fscanf(file, "%d %d %d\n", &(o->code), &(o->details[j].book.code), &(o->details[j].quantity));
+
+            o->details[j].book = get_book_by_id(o->details[j].book.code, list_books);
+            o->details[j].subtotal = o->details[j].quantity * o->details[j].book.price;
+            o->total += o->details[j].subtotal;
+        };
+    }
+    else
+    {
+        cout<< "Error to open file\n" << endl;
+    };
+
+    o->client = get_client_by_code(o->client.code, list_clients);
+    
+    fclose(file);
+};

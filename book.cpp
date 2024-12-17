@@ -2,6 +2,7 @@
 #include <cstring>
 #include <iomanip>
 #include "book.h"
+#include "order.h"
 #include "input_output.h"
 using namespace std;
 
@@ -17,7 +18,7 @@ void menu_books(int *opt, struct Book *list_books){
 
 
     do{
-        read_file_books("book.txt", list_books);
+        read_file_book("book.txt", list_books);
         cout<<left;
         cout << setw(20) << "\n --- MANAGMENT OF BOOKS ---"<<endl;    
         cout << "\nSelect an option from [1-8] according to the menu:" << endl;
@@ -72,6 +73,7 @@ void menu_books(int *opt, struct Book *list_books){
 
 void insert_book(struct Book *b){
     cout<< "\n*** Insert new book ***"<<endl;
+    book_index = num_books;
     book_index++;
     b->code = book_index;
     cout<<"Author: ";
@@ -92,9 +94,6 @@ void insert_book(struct Book *b){
         cout<<"Year: ";
         cin>>b->year;
     }while(b->year < 2000);
-    
-    cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4): ";
-    cin>>b->category;
 
     do{
         cout<<"Category (fantasy - 1, fantastic - 2, history - 3, roman - 4): ";
@@ -412,4 +411,37 @@ void find_category(struct Book *b, struct Book *crit_lst_books, char *crit){
         }
     }
     print_lst_books(crit_lst_books, ind+1);
+}
+
+struct Book get_book(int pos, struct Book *list_books)
+{
+    if (pos != -1)
+    {
+        return list_books[pos];
+    }
+    else
+    {
+        return default_book();
+    }
+}
+
+struct Book default_book()
+{
+    struct Book b;
+    b.code = 0;
+    b.title[0] = '\0';
+    return b;
+}
+
+struct Book get_book_by_id(int code, struct Book *list_books)
+{   
+    for (int i = 0; i < get_num_books(); i++)
+    {
+        if (list_books[i].code == code)
+        {
+            return list_books[i];
+        }
+        
+    };
+    return default_book();
 }

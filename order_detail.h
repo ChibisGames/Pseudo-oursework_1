@@ -4,7 +4,9 @@
 
 struct OrderDetail
 {
-   Book order_detail;
-   int num;
-   float subsum;
+   Book book;
+   int quantity;
+   float subtotal;
 };
+
+void insert_order_detail(OrderDetail *detail, Book *list_books);

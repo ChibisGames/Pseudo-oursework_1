@@ -35,9 +35,13 @@ void menu_clients(int *opt, struct Client *list_clients)
         {
             case 1: //insert
                 insert_client(&list_clients[get_num_clients()]);
+                sort_clients(list_clients);
                 print_clients_in_file(list_clients);
                 break;
             case 2: //read and print
+                sort_clients(list_clients);
+                clean_file("client.txt");
+                print_clients_in_file(list_clients);
                 print_list_clients(list_clients);
                 break;
             case 3: //update
@@ -60,7 +64,6 @@ void menu_clients(int *opt, struct Client *list_clients)
 
     } while (*opt != 5);
 }
-
 
 void insert_client(struct Client *c)
 {
@@ -88,12 +91,10 @@ void insert_client(struct Client *c)
     num_clients++;
 };
 
-
 int get_num_clients()
 {
     return num_clients;
 };
-
 
 int search_client(char *search_name, struct Client *list_clients)
 {
@@ -115,13 +116,11 @@ int search_client(char *search_name, struct Client *list_clients)
     return pos;
 };
 
-
 void print_client(struct Client c)
 {
     cout<<left;
     cout<< setw(5) << c.code << setw(10) << c.name << setw(5) << c.age << setw(10) << c.salary <<endl;
 };
-
 
 void print_list_clients(struct Client *list_clients)
 {
@@ -132,7 +131,6 @@ void print_list_clients(struct Client *list_clients)
         print_client(list_clients[i]);
     };
 };
-
 
 void update_client(char *search_name, struct Client *list_clients)
 {
@@ -164,7 +162,6 @@ void update_client(char *search_name, struct Client *list_clients)
     else {cout<< "\nClient not found!" <<endl;};
 };
 
-
 void delete_client(char *search_name, struct Client *list_clients)
 {
     int pos;
@@ -185,4 +182,51 @@ void delete_client(char *search_name, struct Client *list_clients)
         cout<< "\nClient deleted!" <<endl;
     }
     else {cout<< "\nClient not found!" <<endl;};
+};
+
+void sort_clients(struct Client *list_clients)
+{
+    struct Client temp;
+
+    for (int i = 0; i < get_num_clients() - 1; i++)
+    {
+        for (int j = i + 1; j < get_num_clients(); j++)
+        {
+            if (list_clients[i].code > list_clients[j].code)
+            {
+                temp = list_clients[i];
+                list_clients[i] = list_clients[j];
+                list_clients[j] = temp;
+            }
+            else if (list_clients[i].code == list_clients[j].code)
+            {
+                (list_clients[j].code)++;
+            };
+        };
+    };
+};
+
+struct Client get_client_by_code(int client_code, struct Client *list_clients)
+{
+    for (int i = 0; i < get_num_clients(); i++)
+    {
+        if (list_clients[i].code == client_code)
+        {
+            return list_clients[i];
+        }
+    };
+
+    return default_client();
+};
+
+struct Client get_client(int pos, struct Client *list_clients)
+{
+    if (pos != -1)
+    {
+        return list_clients[pos];
+    }
+    else 
+    {
+        return default_client();
+    };
 };
