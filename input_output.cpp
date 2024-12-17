@@ -255,6 +255,7 @@ void read_file_order_detail(const char file_name[30], struct Order *o,
 
     if (file)
     {      
+        o->total = 0;
         for (int j = 0; j < o->num_details; j++)
         {
             fscanf(file, "%d %d %d\n", &(o->code), &(o->details[j].book.code), &(o->details[j].quantity));
